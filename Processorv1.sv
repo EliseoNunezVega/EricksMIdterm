@@ -28,6 +28,7 @@ module Processorv1(
     logic PC= 6'b000000;
     logic temp1 =6'b000000;
     logic Address1 =6'b000000;
+    logic ReadData[31:0]; 
     always @(posedge clk)
     begin
     //PC counting up section
@@ -36,11 +37,14 @@ module Processorv1(
             PC = Address1;
             temp1 = PC;
             PC = temp1+1;
+          
+
          end
          if(PC==6'b111111)begin
          PC=0;
          end 
      //instructional Memory
+    ReadData = register[Address1];
         
     end
 
