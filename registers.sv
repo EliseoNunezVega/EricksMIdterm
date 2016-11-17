@@ -21,6 +21,7 @@
 
 
 module regfile(
+    input clk, //clk 
     input ra1, //register address 1
     input ra2, //register address 2 
     input we, // write enable 
@@ -28,16 +29,18 @@ module regfile(
     input wd, //wriitng destination
     output rd1, //register destination1 
     output rd2 //register destination 2
+    
     );
-    logic register[63:0];
+    //mental note <= means read so ra <= r1 means r1 reads ra
+    logic [63:0] register[31:0];
     assign rd1 = register[ra1];
     assign rd2 = register[ra2];
-    always begin if (we) 
-    register[wa] =  wd;
-    end
-    
-    
-     
+    always @(wa) begin //  always allows you to use normal c code begin and end are bars to hold the code in. this says if there is a change in wa, start this code ^_^  
+        if (we)  
+            register[wa] =  wd;
+    end //
+   // assign register[wa] = (we)? wd : register[wa]; //only works with constants
+       
 endmodule
 
     
