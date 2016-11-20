@@ -32,7 +32,7 @@ module regfile(
     
     );
     //mental note <= means read so ra <= r1 means r1 reads ra
-    logic [63:0] register[31:0];
+    logic [31:0] register [63:0]; //packed part (number of bits) variable unpacked part(array)
     assign rd1 = register[ra1];
     assign rd2 = register[ra2];
     always @(wa) begin //  always allows you to use normal c code begin and end are bars to hold the code in. this says if there is a change in wa, start this code ^_^  
