@@ -23,12 +23,20 @@
 module Processorv1(
     input clkreset,
     input clk
-    );         
-    logic [63:0] register[31:0];
-    logic PC= 6'b000000;
-    logic temp1 =6'b000000;
-    logic Address1 =6'b000000;
-    logic ReadData[31:0]; 
+    );
+    logic [0:1] Instructiontype;         
+    logic [31:0] register[0:63];
+    //66469
+    logic [5:0] rs;
+    logic [5:0] rd;
+    logic [3:0] funct;
+    logic [5:0] rt;
+    logic [8:0] Immid;
+    logic [14:0] Immid2;
+    logic PC= 0;
+    logic temp1 =0;
+    logic Address1 =0;
+    logic [31:0] ReadData; 
     always @(posedge clk)
     begin
     //PC counting up section
@@ -37,14 +45,24 @@ module Processorv1(
             PC = Address1;
             temp1 = PC;
             PC = temp1+1;
-          
-
          end
          if(PC==6'b111111)begin
-         PC=0;
+         PC<=0;
          end 
      //instructional Memory
-    ReadData = register[Address1];
+    ReadData[31:0] <= register[Address1][31:0];
+    //control unit
+    Instructiontype[0] <= ReadData[0];
+    rs=ReadData[6:1];
+    rd=ReadData[12:7];
+    funct=ReadData[16:13];
+    if(Instructiontype[0]==0) begin
+    rt=ReadData[22:17];
+    Immid=ReadData[31:23];
+    end
+    if (Instructiontype[0]==1)begin
+    Immid2=ReadData[31:17];
+    end
         
     end
 
