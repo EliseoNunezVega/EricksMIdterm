@@ -26,7 +26,7 @@ module datamem(
     input writedata,
     output readdata
     );
-    logic [127:0]RAM [31:0];
+    logic [31:0] RAM [127:0];
     always_ff @(address) begin 
     if (we)
         RAM[address] <= writedata;
