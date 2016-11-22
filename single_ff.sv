@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 11/18/2016 08:12:50 AM
+// Create Date: 11/12/2016 04:17:06 PM
 // Design Name: 
-// Module Name: datamem
+// Module Name: single_ff
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,12 +20,10 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module datamem(
-    input logic we, 
-    input [127:0] address,
-    input [127:0] writedata,
-    output [127:0] readdata
+module single_ff(
+    input clk,
+    input rst,
+    input d,
+    output q
     );
-    logic [127:0]RAM [31:0];
-     //   readdata = RAM[address]
 endmodule
