@@ -24,7 +24,7 @@ module Processorv1(
     input clkreset,
     input clk
     );
-    logic [0:1] Instructiontype;         
+    logic Instructiontype;         
     logic [31:0] register[0:63];
     //66469
     logic [5:0] rs;
@@ -37,6 +37,11 @@ module Processorv1(
     logic temp1 =0;
     logic Address1 =0;
     logic [31:0] ReadData; 
+    logic [3:0] ALUopsel;   
+    logic Ms1;
+    logic Ms2;
+    logic WE1;
+    logic WE2;
     always @(posedge clk)
     begin
     //PC counting up section
@@ -52,19 +57,23 @@ module Processorv1(
      //instructional Memory
     ReadData[31:0] <= register[Address1][31:0];
     //control unit
-    Instructiontype[0] <= ReadData[0];
-    rs=ReadData[6:1];
-    rd=ReadData[12:7];
-    funct=ReadData[16:13];
-    if(Instructiontype[0]==0) begin
-    rt=ReadData[22:17];
-    Immid=ReadData[31:23];
+   
     end
-    if (Instructiontype[0]==1)begin
-    Immid2=ReadData[31:17];
-    end
+  Motherbrain l1(
+             .ReadData( ), 
+             .ALUopsel(),   
+             .Ms1(),
+             .Ms2(),
+             .WE1(),
+             .WE2(),
+             .rs(),
+             .rd(),
+             .funct(),
+             .rt(),
+             .Immid(),
+             .Immid2()
+             );
         
-    end
-
 
 endmodule
+
