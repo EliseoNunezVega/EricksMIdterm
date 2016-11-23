@@ -74,6 +74,25 @@ module Processorv1(
              .Immid2()
              );
         
-
+              ALU32bit (
+              
+              
+              );
+    
+    
+     Sign_Extend l5 (
+     .imm(Imm),
+     .extdI(Ext_imm)
+     );
+    
+    Mux1_21 l6 (
+    .rd2(a),
+    .extdI(b)
+    );
+    
+    Mux2_21 l7 (
+    .readdata(a);
+    .aluresult(b);
+    );
 endmodule
 
