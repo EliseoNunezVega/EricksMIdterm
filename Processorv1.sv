@@ -42,6 +42,9 @@ module Processorv1(
     logic Ms2;
     logic WE1;
     logic WE2;
+    logic [31:0] RD1;
+    logic [31:0] RD2;
+    logic [31:0] WD;
     always @(posedge clk)
     begin
     //PC counting up section
@@ -60,39 +63,28 @@ module Processorv1(
    
     end
   Motherbrain l1(
-             .ReadData( ), 
-             .ALUopsel(),   
-             .Ms1(),
-             .Ms2(),
-             .WE1(),
-             .WE2(),
-             .rs(),
-             .rd(),
-             .funct(),
-             .rt(),
-             .Immid(),
-             .Immid2()
+             .ReadData(ReadData), 
+             .ALUopsel(ALUopsel),   
+             .Ms1(Ms1),
+             .Ms2(Ms2),
+             .WE1(WE1),
+             .WE2(WE2),
+             .rs(rs),
+             .rd(rd),
+             .funct(funct),
+             .rt(rt),
+             .Immid(Immid),
+             .Immid2(Immid2)
              );
-        
-              ALU32bit (
-              
-              
-              );
-    
-    
-     Sign_Extend l5 (
-     .imm(Imm),
-     .extdI(Ext_imm)
-     );
-    
-    Mux1_21 l6 (
-    .rd2(a),
-    .extdI(b)
-    );
-    
-    Mux2_21 l7 (
-    .readdata(a);
-    .aluresult(b);
-    );
-endmodule
+ regfile l2(
+     .ra1(rs), 
+     .ra2(rt), //register address 2 
+     .we(WE1), // write enable 
+     .wa(rd), //writing address
+     .wd(WD), //wriitng destination
+     .rd1(RD1), //register destination1 
+     .rd2(RD2) //register destination 2
+ 
+ );
 
+endmodule
