@@ -55,7 +55,7 @@ module ALU128( op1 , op2 , opsel , mode , result , c_flag , z_flag , o_flag , s_
                                                                                                                      ((mode == 1 & opsel == 3'b011 )? 0:
                                                                                                                          ((mode == 1 & opsel == 3'b100 )? 1'b0:
                                                                                                                                                          3'bzzz)))))))))))); 
-    for (i=1; i<=127; i++) begin:g
+    for (i=0; i<=31; i++) begin:g
     ALU1bit l1 (
        .op1(op1[i]),
        .op2(op2[i]),
