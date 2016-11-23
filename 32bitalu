@@ -22,11 +22,11 @@
 
 module ALU128( op1 , op2 , opsel , mode , result , c_flag , z_flag , o_flag , s_flag );
     
-    parameter DWIDTH = 31;
+    parameter DWIDTH = 32;
     
     input logic [DWIDTH-1:0] op1;
     input logic [DWIDTH-1:0] op2;
-    input logic [2:0] opsel;
+    input logic [       2:0] opsel;
     input logic mode;
     output logic [DWIDTH-1:0] result;
     output logic c_flag;
@@ -62,17 +62,17 @@ module ALU128( op1 , op2 , opsel , mode , result , c_flag , z_flag , o_flag , s_
        .opsel(opsel),
        .mode(mode),
        .result(result[i]),
-       .cout(cout),
-       .Cin(Cin)      
+       .Cout(Cout[i]),
+       .Cin(Cin[i])      
     );
      
-     assign Cin[i] = ((mode == 0 & opsel == 3'b000 )? Cout[i-1]:
-                        ((mode == 0 & opsel == 3'b001 )? Cout[i-1]:
+    assign Cin[i+1] = ((mode == 0 & opsel == 3'b000 )? Cout[i]:
+                        ((mode == 0 & opsel == 3'b001 )? Cout[i]:
                             ((mode == 0 & opsel == 3'b010 )? 0:
-                                ((mode == 0 & opsel == 3'b011 )? Cout[i-1]:
-                                    ((mode == 0 & opsel == 3'b100 )? Cout[i-1]:
+                                ((mode == 0 & opsel == 3'b011 )? Cout[i]:
+                                    ((mode == 0 & opsel == 3'b100 )? Cout[i]:
                                         ((mode == 0 & opsel == 3'b101 )? 0:
-                                            ((mode == 0 & opsel == 3'b110 )? Cout[i-1]:
+                                            ((mode == 0 & opsel == 3'b110 )? Cout[i]:
                                                 ((mode == 1 & opsel == 3'b000 )? 0:
                                                     ((mode == 1 & opsel == 3'b001 )? 0:
                                                         ((mode == 1 & opsel == 3'b010 )? 0:  
@@ -85,7 +85,7 @@ module ALU128( op1 , op2 , opsel , mode , result , c_flag , z_flag , o_flag , s_
     
     assign c_flag = (Cout[31] == 1)? 1:0;
     assign z_flag = (result[31:0] == 0) ? 1 : 0; //ask TA tommorow about zero flag 
-    assign s_flag = ((mode == 0 & (opsel == 3'b001 | opsel == 3'b011)) & Cout[127] == 1)? 1:0 ;
+    assign s_flag = ((mode == 0 & (opsel == 3'b001 | opsel == 3'b011)) & Cout[31] == 1)? 1:0 ;
     assign o_flag = (Cout[31] ==1 )? 1:0;
 
     
