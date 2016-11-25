@@ -20,12 +20,22 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
+
 module datamem(
     input logic we, 
-    input [127:0] address,
-    input [127:0] writedata,
-    output [127:0] readdata
+    input logic [31:0] address ,
+    input logic [31:0] writedata,
+    output logic [31:0] readdata
     );
-    logic [127:0]RAM [31:0];
+    logic [31:0] RAM [127:0];
+    
+    always_ff @(address) begin
+    if (we) begin
+    readdata = RAM[address];
+     end else begin
+     readdata = 1'bx;
+     end
+    end 
      //   readdata = RAM[address]
 endmodule
+
