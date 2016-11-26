@@ -37,8 +37,13 @@ module regfile(
     
 always_ff @(ra1) begin  //  always allows you to use normal c code begin and end are bars to hold the code in. this says if there is a change in wa, start this code ^_^  
         if (we) begin
-           rd1 = 1'bx;
-           end       
+           rd1 <= 1'bx;
+           rd2 <= register[ra1];
+           end
+        else begin
+        rd1 <= register[ra1];
+        rd2 <= register[ra2];
+        end          
         //   register [wa] = wd; // w/o braces, if statements will only read the first line.
                   //if write enable true assign register to wd
     register [0] = 0;
@@ -47,3 +52,5 @@ always_ff @(ra1) begin  //  always allows you to use normal c code begin and end
    // assign register[wa] = (we)? wd : register[wa]; //only works with constants
        
 endmodule
+
+    
