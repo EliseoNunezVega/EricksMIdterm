@@ -34,23 +34,16 @@ module regfile(
     logic [63:0] register[31:0];
     //assign rd1 = register[ra1];
  //   assign rd2 = register[ra2];
-always_ff @(wa) begin  //  always allows you to use normal c code begin and end are bars to hold the code in. this says if there is a change in wa, start this code ^_^  
+    
+always_ff @(ra1) begin  //  always allows you to use normal c code begin and end are bars to hold the code in. this says if there is a change in wa, start this code ^_^  
         if (we) begin
            rd1 = 1'bx;
-           rd2 = ra1;
-           end else begin 
-           rd1 = ra1;
-           rd1 = ra2;
-           end     
-//always_ff @(wa) begin  //  always allows you to use normal c code begin and end are bars to hold the code in. this says if there is a change in wa, start this code ^_^  
-  //      if (we)
-    //       register [wa] = wd; // w/o braces, if statements will only read the first line.
-      //             //if write enable true assign register to wd
-    // register [0] = 0;
-      //  end 
+           end       
+        //   register [wa] = wd; // w/o braces, if statements will only read the first line.
+                  //if write enable true assign register to wd
+    register [0] = 0;
+      end 
         //
    // assign register[wa] = (we)? wd : register[wa]; //only works with constants
        
 endmodule
-
-    
