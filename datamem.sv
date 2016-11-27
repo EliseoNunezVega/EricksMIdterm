@@ -20,7 +20,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-
 module datamem(
     input logic we, 
     input logic [31:0] address ,
@@ -33,9 +32,10 @@ module datamem(
     if (we) begin
     readdata = RAM[address];
      end else begin
-     readdata = 1'bx;
+     RAM[address] <= writedata;
      end
     end 
      //   readdata = RAM[address]
 endmodule
+
 
