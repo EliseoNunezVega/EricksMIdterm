@@ -1,4 +1,4 @@
-`timescale 1ns / 1ps
+``timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
@@ -532,13 +532,6 @@ module andop(
     assign out = a & b;
     
 endmodule
-
-
-
-
-
-
-
 module Mux2_21(
     input a,
     input b,
@@ -614,16 +607,13 @@ module processor_v1(
     input clkreset,
     input clk
     );
-          
     logic [31:0] inst_mem[0:63]; //reg files
     //66469
     logic Instructiontype; //determines whether or not its R type or I type
     //66469
     logic [5:0] rs; logic [5:0] rd;  logic [3:0] funct; logic [5:0] rt; //output of controller
              logic [8:0] Immid; logic [14:0] Immid2; //output of controller whether it's R type or I type
-             
     logic PC= 0; logic temp1 =0; logic Address1 =0; //Clk (program counter)
-    
     logic [31:0] ReadData; 
     logic [3:0] ALUopsel; 
       
@@ -633,7 +623,7 @@ module processor_v1(
     logic [31:0] WD;
     
     logic [31:0] aluresult;
-      assign inst_mem[0] = 32'b00000000000001111000000000000000; //NOP
+    assign inst_mem[0] = 32'b00000000000001111000000000000000; //NOP
     assign inst_mem[1] = 32'b10000000000010000000000000000001; //R1 = R0 + 1
     assign inst_mem[2] = 32'b10000010000100000000000000000001; //R2 = R1 + 1
     assign inst_mem[3] = 32'b00000010000111010000010000000000; //R3 = R1 XOR R2
@@ -655,23 +645,11 @@ module processor_v1(
          if(PC==6'b111111)begin
          PC<=0;
          end 
+        
      //instructional Memory
-    ReadData[31:0] <= inst_mem[Address1][31:0];
-    //control unit
-    Instructiontype <= ReadData[0];
-    rs<=ReadData[6:1];
-    rd<=ReadData[12:7];
-    funct<=ReadData[16:13];
-    if(Instructiontype==0) begin
-    rt<=ReadData[22:17];
-    Immid<=ReadData[31:23];
+    ReadData[31:0] = inst_mem[Address1][31:0];
     end
-    if (Instructiontype==1)begin
-    Immid2<=ReadData[31:17];
-    end
-               
-    end
-    
+    //control unit   
 motherbrain l1(
           .ReadData(ReadData), 
           .ALUopsel(ALUopsel),   
@@ -702,7 +680,7 @@ regfile l2(
             .mode(funct[0]), //logic or arithmetic
             .op1(RD1), //first operand
             .op2(OperandB), //second operand
-            .result(rd) //results
+            .result(aluresult) //results
               );
     
     datamem l4 (
@@ -728,7 +706,7 @@ regfile l2(
      .a(ReadDatamem),
      .b(ALUresult),
      .MUXsel2(Ms2),
-     .WD(WD)  
-
-    );
+     .WD(WD));
+     
 endmodule
+
