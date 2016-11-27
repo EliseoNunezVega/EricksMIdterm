@@ -31,7 +31,7 @@ module regfile(
     
     );
     //mental note <= means read so ra <= r1 means r1 reads ra
-    logic [5:0] register[31:0];
+    logic [31:0] register[63:0];
     //assign rd1 = register[ra1];
  //   assign rd2 = register[ra2];
     
