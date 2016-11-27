@@ -28,14 +28,17 @@ module datamem(
     );
     logic [31:0] RAM [127:0];
     
+    
     always_ff @(address) begin
     if (we) begin
-    readdata = RAM[address];
+    RAM[address]<=writedata;
+    readdata <= RAM[address];
      end else begin
      RAM[address] <= writedata;
      end
     end 
      //   readdata = RAM[address]
 endmodule
+
 
 
