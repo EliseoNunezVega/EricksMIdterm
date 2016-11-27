@@ -21,13 +21,13 @@
 
 
 module regfile( 
-    input  logic ra1, //register address 1
-    input  logic ra2, //register address 2 
+    input  logic [63:0]  ra1, //register address 1
+    input  logic [63:0] ra2, //register address 2 
     input  logic we, // write enable 
-    input  logic wa, //writing address
+    input  logic [5:0] wa, //writing address
     input  logic wd, //wriitng destination
-    output logic rd1, //register destination1 
-    output logic rd2 //register destination 2
+    output logic [31:0] rd1, //register destination1 
+    output logic [31:0] rd2 //register destination 2
     
     );
     //mental note <= means read so ra <= r1 means r1 reads ra
@@ -44,7 +44,7 @@ always_ff @(ra1) begin  //  always allows you to use normal c code begin and end
         rd1 <= register[ra1];
         rd2 <= register[ra2];
         end          
-        //   register [wa] = wd; // w/o braces, if statements will only read the first line.
+                //   register [wa] = wd; // w/o braces, if statements will only read the first line.
                   //if write enable true assign register to wd
     register [0] = 0;
       end 
