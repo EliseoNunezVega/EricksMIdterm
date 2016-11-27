@@ -20,28 +20,26 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module ALU128( op1 , op2 , opsel , mode , result , c_flag , z_flag , o_flag , s_flag );
+module ALU32bit (op1 , op2 , opsel , mode , result , c_flag , z_flag , o_flag , s_flag);
     
     parameter DWIDTH = 32;
+    parameter logic width = 32;
     
     input logic [DWIDTH-1:0] op1;
     input logic [DWIDTH-1:0] op2;
     input logic [       2:0] opsel;
     input logic mode;
-    output logic [DWIDTH-1:0] result;
+    output logic [(DWIDTH-1):0] result;
     output logic c_flag;
     output logic z_flag;
     output logic o_flag;
     output logic s_flag;
     
+    wire logic [DWIDTH-1:0] Cin;
+    wire logic [DWIDTH-1:0] Cout;
     genvar i;
-    wire [DWIDTH-1:0] Cin;
-    wire [DWIDTH-1:0] Cout;
+ //
     generate
-    
-    
-    
-    
      assign Cin[0] = ((mode == 0 & opsel == 3'b000 )? 1'bz:
                                                  ((mode == 0 & opsel == 3'b001 )? 1'bz :
                                                                         ((mode == 0 & opsel == 3'b010 )? 1'b1:
@@ -54,15 +52,15 @@ module ALU128( op1 , op2 , opsel , mode , result , c_flag , z_flag , o_flag , s_
                                                                                                                  ((mode == 1 & opsel == 3'b010 )? 0:  
                                                                                                                      ((mode == 1 & opsel == 3'b011 )? 0:
                                                                                                                          ((mode == 1 & opsel == 3'b100 )? 1'b0:
-                                                                                                                                                         3'bzzz)))))))))))); 
-    for (i=0; i<=31; i++) begin:g
+                                                                                                                                                3'bzzz)))))))))))); 
+    for (i=0; i<width; i++) begin : g
     ALU1bit l1 (
        .op1(op1[i]),
        .op2(op2[i]),
        .opsel(opsel),
        .mode(mode),
        .result(result[i]),
-       .Cout(Cout[i]),
+       .cout(Cout[i]),
        .Cin(Cin[i])      
     );
      
@@ -84,7 +82,7 @@ module ALU128( op1 , op2 , opsel , mode , result , c_flag , z_flag , o_flag , s_
     endgenerate
     
     assign c_flag = (Cout[31] == 1)? 1:0;
-    assign z_flag = (result[31:0] == 0) ? 1 : 0; //ask TA tommorow about zero flag 
+    assign z_flag = (result == 0) ? 1 : 0; //ask TA tommorow about zero flag 
     assign s_flag = ((mode == 0 & (opsel == 3'b001 | opsel == 3'b011)) & Cout[31] == 1)? 1:0 ;
     assign o_flag = (Cout[31] ==1 )? 1:0;
 
