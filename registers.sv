@@ -47,6 +47,8 @@ always_ff @(ra1) begin  //  always allows you to use normal c code begin and end
                 //   register [wa] = wd; // w/o braces, if statements will only read the first line.
                   //if write enable true assign register to wd
     register[0] = 0;
+    register[wa] <= wd;
+
       end 
         //
    // assign register[wa] = (we)? wd : register[wa]; //only works with constants
